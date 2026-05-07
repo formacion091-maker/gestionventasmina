@@ -6,9 +6,10 @@
 }
 
 body{
-    background:linear-gradient(120deg,#0f172a,#1e3a8a,#0f172a);
-    color:white;
-    overflow-x:hidden;
+    background: url('fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    overflow-x: hidden;
 }
 
 header{
