@@ -22,7 +22,7 @@ $productos = $conn->query("SELECT * FROM productos");
 </header>
 
 <section style="padding:40px;text-align:center;">
-    <h2>Moda para Damas, Caballeros y Niños, edinson mina</h2>
+    <h2>Moda para Damas, Caballeros y Niños, edinson mina cuero</h2>
     <p>Explora nuestros productos modernos y dinámicos.</p>
 </section>
 
