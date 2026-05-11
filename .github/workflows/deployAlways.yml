@@ -18,8 +18,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp-mina.alwaysdata.net # Change if using another host
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          username: mina
+          password: clase12
           server-dir: www/cliente1/  # Replace with your correct path
           protocol: ftps
           timeout: 86400000
