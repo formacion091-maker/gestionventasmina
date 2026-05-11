@@ -19,7 +19,7 @@ jobs:
         with:
           server: ftp-mina.alwaysdata.net # Change if using another host
           username: mina
-          password: clase1234
+          password: clase12
           server-dir: www/cliente1/  # Replace with your correct path
           protocol: ftps
           timeout: 86400000
