@@ -2,6 +2,10 @@
 include 'conexion.php';
 include 'helpers.php';
 
+if(!$conn){
+    die("No hay conexion con la base de datos.");
+}
+
 $nombre = $_POST['nombre'];
 $categoria = normalizar_categoria($_POST['categoria']);
 $descripcion = $_POST['descripcion'];

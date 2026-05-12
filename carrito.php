@@ -7,7 +7,7 @@ FROM carrito
 INNER JOIN productos
 ON carrito.producto_id = productos.id";
 
-$datos = $conn->query($sql);
+$datos = $conn ? $conn->query($sql) : false;
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,16 @@ $datos = $conn->query($sql);
 </header>
 
 <div class="contenedor">
-    <?php while($row = $datos->fetch_assoc()){ ?>
+    <?php if(!$datos){ ?>
+        <div class="card card-vacia">
+            <div class="card-body">
+                <h2>Carrito no disponible</h2>
+                <p>Revisa la conexi&oacute;n con la base de datos.</p>
+            </div>
+        </div>
+    <?php } ?>
+
+    <?php while($datos && $row = $datos->fetch_assoc()){ ?>
         <div class="card">
             <img src="<?php echo htmlspecialchars(ruta_imagen_producto($row['imagen'], $row['categoria'])); ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
             <div class="card-body">

@@ -2,16 +2,18 @@
 include 'conexion.php';
 include 'helpers.php';
 
-$productos = $conn->query("SELECT * FROM productos ORDER BY categoria, nombre");
+$productos = $conn ? $conn->query("SELECT * FROM productos ORDER BY categoria, nombre") : false;
 $secciones = [
     'Hombres' => [],
     'Mujeres' => [],
     'Ninos' => []
 ];
 
-while($row = $productos->fetch_assoc()){
-    $categoria = normalizar_categoria($row['categoria']);
-    $secciones[$categoria][] = $row;
+if($productos){
+    while($row = $productos->fetch_assoc()){
+        $categoria = normalizar_categoria($row['categoria']);
+        $secciones[$categoria][] = $row;
+    }
 }
 ?>
 
@@ -44,18 +46,36 @@ while($row = $productos->fetch_assoc()){
 
 <main id="inicio">
     <?php foreach($secciones as $titulo => $items){ ?>
+        <?php $imagenes_categoria = listar_imagenes_categoria($titulo); ?>
         <section id="<?php echo carpeta_categoria($titulo); ?>" class="seccion-categoria seccion-<?php echo carpeta_categoria($titulo); ?>">
             <div class="titulo-seccion">
                 <h2><?php echo nombre_categoria($titulo); ?></h2>
-                <p><?php echo count($items); ?> productos disponibles</p>
+                <p><?php echo count($items) + count($imagenes_categoria); ?> productos disponibles</p>
             </div>
 
             <div class="contenedor">
-                <?php if(count($items) === 0){ ?>
+                <?php foreach($imagenes_categoria as $imagen){ ?>
+                    <div class="card">
+                        <img src="<?php echo htmlspecialchars($imagen['ruta']); ?>" alt="<?php echo htmlspecialchars($imagen['nombre']); ?>">
+
+                        <div class="card-body">
+                            <span class="etiqueta"><?php echo nombre_categoria($imagen['categoria']); ?></span>
+                            <h3><?php echo htmlspecialchars($imagen['nombre']); ?></h3>
+                            <p>Prenda disponible en la secci&oacute;n <?php echo nombre_categoria($imagen['categoria']); ?>.</p>
+                            <strong>Consultar precio</strong>
+
+                            <a class="btn" href="<?php echo htmlspecialchars(enlace_whatsapp_imagen($imagen)); ?>" target="_blank">
+                                Consultar por WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
+
+                <?php if(count($items) === 0 && count($imagenes_categoria) === 0){ ?>
                     <div class="card card-vacia">
                         <div class="card-body">
-                            <h3>Sin productos por ahora</h3>
-                            <p>Agrega productos desde el panel administrador para llenar esta secci&oacute;n.</p>
+                            <h3>Productos del administrador</h3>
+                            <p>Agrega productos desde el panel administrador para mostrar nombre, descripci&oacute;n y precio.</p>
                         </div>
                     </div>
                 <?php } ?>

@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin'])){
 include 'conexion.php';
 include 'helpers.php';
 
-$productos = $conn->query("SELECT * FROM productos ORDER BY categoria, nombre");
+$productos = $conn ? $conn->query("SELECT * FROM productos ORDER BY categoria, nombre") : false;
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +50,16 @@ $productos = $conn->query("SELECT * FROM productos ORDER BY categoria, nombre");
 </div>
 
 <div class="contenedor">
-    <?php while($row = $productos->fetch_assoc()){ ?>
+    <?php if(!$productos){ ?>
+        <div class="card card-vacia">
+            <div class="card-body">
+                <h2>Base de datos no conectada</h2>
+                <p>Revisa la conexi&oacute;n para poder ver y guardar productos del administrador.</p>
+            </div>
+        </div>
+    <?php } ?>
+
+    <?php while($productos && $row = $productos->fetch_assoc()){ ?>
         <div class="card">
             <img src="<?php echo htmlspecialchars(ruta_imagen_producto($row['imagen'], $row['categoria'])); ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
 

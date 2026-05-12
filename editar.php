@@ -2,6 +2,10 @@
 include 'conexion.php';
 include 'helpers.php';
 
+if(!$conn){
+    die("No hay conexion con la base de datos.");
+}
+
 $id = (int)$_GET['id'];
 
 $producto = $conn->query("SELECT * FROM productos WHERE id=$id");

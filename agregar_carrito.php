@@ -5,6 +5,11 @@ include 'helpers.php';
 $id = (int)$_GET['id'];
 $telefono = '573232825032';
 
+if(!$conn){
+    header("Location: index.php");
+    exit;
+}
+
 $stmt = $conn->prepare("SELECT id, nombre, categoria, descripcion, precio FROM productos WHERE id=?");
 $stmt->bind_param("i", $id);
 $stmt->execute();

@@ -19,3 +19,6 @@ CREATE TABLE carrito (
     cantidad INT,
     FOREIGN KEY (producto_id) REFERENCES productos(id)
 );
+
+INSERT INTO usuarios (usuario, password)
+VALUES ('mina', MD5('1234'));
