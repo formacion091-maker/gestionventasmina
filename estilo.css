@@ -2,32 +2,61 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    background: url('fondo.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    overflow-x: hidden;
+    min-height:100vh;
+    background:#101418 url('imagenes/hombres/ropadehombres.jpg') no-repeat center top fixed;
+    background-size:cover;
+    color:#ffffff;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:rgba(5,8,12,0.72);
 }
 
 header{
-    padding:20px;
+    padding:28px 20px;
     text-align:center;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.55);
     backdrop-filter:blur(10px);
 }
 
+.hero{
+    min-height:360px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.7)),
+        url('imagenes/hombres/ropadehombres2.jpg') center/cover no-repeat;
+}
+
+.hero-contenido{
+    width:min(920px, 100%);
+}
+
 header h1{
-    font-size:40px;
-    animation: aparecer 2s ease;
+    font-size:clamp(32px, 6vw, 58px);
+    animation:aparecer 1s ease;
+}
+
+.hero p{
+    margin-top:18px;
+    font-size:20px;
+    color:#e5e7eb;
 }
 
 @keyframes aparecer{
     from{
         opacity:0;
-        transform:translateY(-50px);
+        transform:translateY(-30px);
     }
     to{
         opacity:1;
@@ -37,75 +66,169 @@ header h1{
 
 .menu{
     display:flex;
+    flex-wrap:wrap;
     justify-content:center;
-    gap:20px;
-    margin-top:20px;
+    gap:14px;
+    margin-top:22px;
 }
 
-.menu a{
+.menu a,
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:42px;
     text-decoration:none;
     color:white;
-    background:#2563eb;
-    padding:12px 20px;
-    border-radius:10px;
-    transition:0.4s;
+    background:#0f766e;
+    border:0;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.25s;
 }
 
-.menu a:hover{
-    background:#38bdf8;
-    transform:scale(1.1);
+.menu a:hover,
+.btn:hover{
+    background:#14b8a6;
+    transform:translateY(-2px);
+}
+
+.btn-peligro{
+    background:#b91c1c;
+}
+
+.btn-peligro:hover{
+    background:#ef4444;
+}
+
+main{
+    background:rgba(0,0,0,0.25);
+}
+
+.seccion-categoria{
+    position:relative;
+    padding:44px 0 58px;
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+
+.seccion-categoria::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, rgba(4,7,12,0.82), rgba(4,7,12,0.52));
+}
+
+.seccion-categoria > *{
+    position:relative;
+}
+
+.seccion-hombres{
+    background-image:url('imagenes/hombres/ropadehombres.jpg');
+}
+
+.seccion-mujeres{
+    background-image:url('imagenes/mujeres/fondo.jpg'), linear-gradient(135deg, #12261f, #4c1d3f);
+}
+
+.seccion-ninos{
+    background-image:url('imagenes/ninos/fondo.jpg'), linear-gradient(135deg, #12333a, #3b2f13);
+}
+
+.titulo-seccion{
+    width:min(1180px, calc(100% - 32px));
+    margin:0 auto 22px;
+}
+
+.titulo-seccion h2{
+    font-size:clamp(28px, 4vw, 44px);
+}
+
+.titulo-seccion p{
+    margin-top:6px;
+    color:#d1d5db;
 }
 
 .contenedor{
+    width:min(1180px, calc(100% - 32px));
+    margin:0 auto;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:20px;
-    padding:40px;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:22px;
 }
 
 .card{
-    background:rgba(255,255,255,0.1);
-    border-radius:20px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:8px;
     overflow:hidden;
-    transition:0.5s;
+    transition:0.3s;
     backdrop-filter:blur(10px);
+    box-shadow:0 18px 38px rgba(0,0,0,0.26);
 }
 
 .card:hover{
-    transform:translateY(-10px) scale(1.02);
+    transform:translateY(-6px);
 }
 
 .card img{
     width:100%;
-    height:300px;
+    aspect-ratio:4 / 3;
     object-fit:cover;
+    display:block;
+    background:#1f2937;
 }
 
 .card-body{
-    padding:20px;
+    padding:18px;
 }
 
-.btn{
+.card-body h2,
+.card-body h3{
+    margin:8px 0;
+}
+
+.card-body p{
+    color:#e5e7eb;
+    line-height:1.45;
+    margin:10px 0;
+}
+
+.card-body strong{
+    display:block;
+    margin:12px 0;
+    font-size:20px;
+}
+
+.card-vacia{
+    min-height:180px;
+    display:flex;
+    align-items:center;
+}
+
+.etiqueta{
     display:inline-block;
-    padding:10px 15px;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-    margin-top:10px;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#38bdf8;
+    color:#99f6e4;
+    font-size:13px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:0;
 }
 
 .formulario{
-    width:400px;
-    margin:40px auto;
-    background:rgba(255,255,255,0.1);
-    padding:30px;
-    border-radius:20px;
+    width:min(440px, calc(100% - 32px));
+    margin:48px auto;
+    background:rgba(255,255,255,0.13);
+    padding:28px;
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:8px;
+    backdrop-filter:blur(10px);
+}
+
+.formulario h2{
+    margin-bottom:18px;
 }
 
 .formulario input,
@@ -113,14 +236,39 @@ header h1{
 .formulario select{
     width:100%;
     padding:12px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
+    margin-top:12px;
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:8px;
+    background:#ffffff;
+    color:#111827;
+}
+
+.formulario textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.formulario .btn{
+    margin-top:14px;
 }
 
 footer{
     text-align:center;
     padding:30px;
-    background:#020617;
-    margin-top:40px;
+    background:#070b12;
+}
+
+@media (max-width:700px){
+    .hero{
+        min-height:300px;
+    }
+
+    .seccion-categoria{
+        background-attachment:scroll;
+    }
+
+    .menu a,
+    .btn{
+        width:100%;
+    }
 }

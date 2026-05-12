@@ -3,18 +3,22 @@ session_start();
 
 if(!isset($_SESSION['admin'])){
     header("Location: login.php");
+    exit;
 }
 
 include 'conexion.php';
+include 'helpers.php';
 
-$productos = $conn->query("SELECT * FROM productos");
+$productos = $conn->query("SELECT * FROM productos ORDER BY categoria, nombre");
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
@@ -22,57 +26,44 @@ $productos = $conn->query("SELECT * FROM productos");
     <h1>Panel Administrador</h1>
 
     <div class="menu">
-        <a href="logout.php">Cerrar Sesión</a>
+        <a href="index.php">Ver tienda</a>
+        <a href="logout.php">Cerrar Sesi&oacute;n</a>
     </div>
 </header>
 
 <div class="formulario">
+    <form action="guardar_producto.php" method="POST" enctype="multipart/form-data">
+        <input type="text" name="nombre" placeholder="Nombre" required>
 
-<form action="guardar_producto.php" method="POST" enctype="multipart/form-data">
+        <select name="categoria">
+            <option>Hombres</option>
+            <option>Mujeres</option>
+            <option value="Ninos">Ni&ntilde;os</option>
+        </select>
 
-<input type="text" name="nombre" placeholder="Nombre" required>
+        <textarea name="descripcion" placeholder="Descripci&oacute;n"></textarea>
+        <input type="number" step="0.01" name="precio" placeholder="Precio">
+        <input type="file" name="imagen" accept="image/*" required>
 
-<select name="categoria">
-    <option>Damas</option>
-    <option>Caballeros</option>
-    <option>Niños</option>
-</select>
-
-<textarea name="descripcion" placeholder="Descripción"></textarea>
-
-<input type="number" step="0.01" name="precio" placeholder="Precio">
-
-<input type="file" name="imagen" required>
-
-<button class="btn">Guardar Producto</button>
-
-</form>
-
+        <button class="btn">Guardar Producto</button>
+    </form>
 </div>
 
 <div class="contenedor">
+    <?php while($row = $productos->fetch_assoc()){ ?>
+        <div class="card">
+            <img src="<?php echo htmlspecialchars(ruta_imagen_producto($row['imagen'], $row['categoria'])); ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
 
-<?php while($row = $productos->fetch_assoc()){ ?>
+            <div class="card-body">
+                <span class="etiqueta"><?php echo nombre_categoria($row['categoria']); ?></span>
+                <h2><?php echo htmlspecialchars($row['nombre']); ?></h2>
+                <p><?php echo htmlspecialchars($row['descripcion']); ?></p>
 
-<div class="card">
-
-<img src="uploads/<?php echo $row['imagen']; ?>">
-
-<div class="card-body">
-
-<h2><?php echo $row['nombre']; ?></h2>
-
-<p><?php echo $row['descripcion']; ?></p>
-
-<a class="btn" href="editar.php?id=<?php echo $row['id']; ?>">Editar</a>
-
-<a class="btn" href="eliminar.php?id=<?php echo $row['id']; ?>">Eliminar</a>
-
-</div>
-</div>
-
-<?php } ?>
-
+                <a class="btn" href="editar.php?id=<?php echo (int)$row['id']; ?>">Editar</a>
+                <a class="btn btn-peligro" href="eliminar.php?id=<?php echo (int)$row['id']; ?>">Eliminar</a>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 
 </body>
