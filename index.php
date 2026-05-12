@@ -30,7 +30,10 @@ while($row = $productos->fetch_assoc()){
         <h1>Tienda Fashion Style</h1>
 
         <div class="menu">
-            <a href="index.php">Inicio</a>
+            <a href="#inicio">Inicio</a>
+            <a href="#hombres">Hombres</a>
+            <a href="#mujeres">Damas</a>
+            <a href="#ninos">Ni&ntilde;os</a>
             <a href="carrito.php">Carrito</a>
             <a href="login.php">Administrador</a>
         </div>
@@ -39,9 +42,9 @@ while($row = $productos->fetch_assoc()){
     </div>
 </header>
 
-<main>
+<main id="inicio">
     <?php foreach($secciones as $titulo => $items){ ?>
-        <section class="seccion-categoria seccion-<?php echo carpeta_categoria($titulo); ?>">
+        <section id="<?php echo carpeta_categoria($titulo); ?>" class="seccion-categoria seccion-<?php echo carpeta_categoria($titulo); ?>">
             <div class="titulo-seccion">
                 <h2><?php echo nombre_categoria($titulo); ?></h2>
                 <p><?php echo count($items); ?> productos disponibles</p>
@@ -68,7 +71,7 @@ while($row = $productos->fetch_assoc()){
                             <strong>$<?php echo number_format((float)$row['precio'], 2); ?></strong>
 
                             <a class="btn" href="agregar_carrito.php?id=<?php echo (int)$row['id']; ?>">
-                                Agregar al carrito
+                                Escoger producto
                             </a>
                         </div>
                     </div>
