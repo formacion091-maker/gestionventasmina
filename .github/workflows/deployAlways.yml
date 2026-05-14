@@ -1,33 +1,42 @@
-name: 🚀 Tarea de Despliegue
+name: Despliegue FTP
 
 on:
-   push:
-     branches:
-       - main
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
-    name: 🎉 Trabajo de Despliegue
+    name: Publicar en Alwaysdata
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚚 Obteniendo el código más reciente
+      - name: Obtener codigo
         uses: actions/checkout@v4
 
-      - name: 📂 Sincronizando archivos via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ftp-mina.alwaysdata.net # Change if using another host
-          username: mina
-          password: clase12
-          server-dir: www/cliente1/  # Replace with your correct path
-          protocol: ftps
-          timeout: 86400000
-          log-level: standard
-          exclude: |
-           .git/**
-           .github/**
-           imagenes/ninos/*_files/**
-           **/*.descarga
-           **/saved_resource.html
-           
+      - name: Instalar lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Sincronizar por FTP
+        env:
+          FTP_SERVER: ftp-mina.alwaysdata.net
+          FTP_USER: mina
+          FTP_PASSWORD: clase12
+          FTP_DIR: www/cliente1
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_SERVER" <<EOF
+          set ftp:ssl-allow true
+          set ftp:ssl-force false
+          set ftp:passive-mode true
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          mirror -R --verbose \
+            --exclude-glob .git/** \
+            --exclude-glob .github/** \
+            --exclude-glob imagenes/ninos/*_files/** \
+            --exclude-glob **/*.descarga \
+            --exclude-glob **/saved_resource.html \
+            ./ "$FTP_DIR"
+          bye
+          EOF
