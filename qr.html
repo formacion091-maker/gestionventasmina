@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codigo QR - Tienda Fashion Style</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        body{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:32px 16px;
+        }
+
+        .qr-panel{
+            width:min(560px, 100%);
+            text-align:center;
+            background:rgba(255,255,255,0.13);
+            border:1px solid rgba(255,255,255,0.16);
+            border-radius:8px;
+            padding:28px;
+            backdrop-filter:blur(10px);
+        }
+
+        .qr-panel img{
+            width:min(360px, 100%);
+            background:white;
+            padding:14px;
+            border-radius:8px;
+            margin:22px auto;
+            display:block;
+        }
+
+        .qr-panel a{
+            color:#99f6e4;
+            word-break:break-word;
+        }
+    </style>
+</head>
+<body>
+    <main class="qr-panel">
+        <h1>Codigo QR de la tienda</h1>
+        <img src="imagenes/qr-tienda.png" alt="Codigo QR para abrir la tienda">
+        <p>Escanea este codigo para abrir:</p>
+        <p><a href="https://mina.alwaysdata.net/cliente1/">https://mina.alwaysdata.net/cliente1/</a></p>
+    </main>
+</body>
+</html>

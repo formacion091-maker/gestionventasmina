@@ -56,7 +56,15 @@ if($productos){
             <div class="contenedor">
                 <?php foreach($imagenes_categoria as $imagen){ ?>
                     <div class="card">
-                        <img src="<?php echo htmlspecialchars($imagen['ruta']); ?>" alt="<?php echo htmlspecialchars($imagen['nombre']); ?>">
+                        <button
+                            class="imagen-compra iniciar-compra"
+                            data-producto="<?php echo htmlspecialchars($imagen['nombre']); ?>"
+                            data-categoria="<?php echo htmlspecialchars(html_entity_decode(strip_tags(nombre_categoria($imagen['categoria'])), ENT_QUOTES, 'UTF-8')); ?>"
+                            data-precio="Consultar precio"
+                            data-descripcion="Imagen: <?php echo htmlspecialchars($imagen['ruta']); ?>">
+                            <img src="<?php echo htmlspecialchars($imagen['ruta']); ?>" alt="<?php echo htmlspecialchars($imagen['nombre']); ?>">
+                            <span>Comprar</span>
+                        </button>
 
                         <div class="card-body">
                             <span class="etiqueta"><?php echo nombre_categoria($imagen['categoria']); ?></span>
@@ -64,9 +72,14 @@ if($productos){
                             <p>Prenda disponible en la secci&oacute;n <?php echo nombre_categoria($imagen['categoria']); ?>.</p>
                             <strong>Consultar precio</strong>
 
-                            <a class="btn" href="<?php echo htmlspecialchars(enlace_whatsapp_imagen($imagen)); ?>" target="_blank">
-                                Consultar por WhatsApp
-                            </a>
+                            <button
+                                class="btn iniciar-compra"
+                                data-producto="<?php echo htmlspecialchars($imagen['nombre']); ?>"
+                                data-categoria="<?php echo htmlspecialchars(html_entity_decode(strip_tags(nombre_categoria($imagen['categoria'])), ENT_QUOTES, 'UTF-8')); ?>"
+                                data-precio="Consultar precio"
+                                data-descripcion="Imagen: <?php echo htmlspecialchars($imagen['ruta']); ?>">
+                                Comprar
+                            </button>
                         </div>
                     </div>
                 <?php } ?>
@@ -82,7 +95,15 @@ if($productos){
 
                 <?php foreach($items as $row){ ?>
                     <div class="card">
-                        <img src="<?php echo htmlspecialchars(ruta_imagen_producto($row['imagen'], $row['categoria'])); ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
+                        <button
+                            class="imagen-compra iniciar-compra"
+                            data-producto="<?php echo htmlspecialchars($row['nombre']); ?>"
+                            data-categoria="<?php echo htmlspecialchars(html_entity_decode(strip_tags(nombre_categoria($row['categoria'])), ENT_QUOTES, 'UTF-8')); ?>"
+                            data-precio="$<?php echo number_format((float)$row['precio'], 2); ?>"
+                            data-descripcion="<?php echo htmlspecialchars($row['descripcion']); ?>">
+                            <img src="<?php echo htmlspecialchars(ruta_imagen_producto($row['imagen'], $row['categoria'])); ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
+                            <span>Comprar</span>
+                        </button>
 
                         <div class="card-body">
                             <span class="etiqueta"><?php echo nombre_categoria($row['categoria']); ?></span>
@@ -90,9 +111,14 @@ if($productos){
                             <p><?php echo htmlspecialchars($row['descripcion']); ?></p>
                             <strong>$<?php echo number_format((float)$row['precio'], 2); ?></strong>
 
-                            <a class="btn" href="agregar_carrito.php?id=<?php echo (int)$row['id']; ?>">
-                                Escoger producto
-                            </a>
+                            <button
+                                class="btn iniciar-compra"
+                                data-producto="<?php echo htmlspecialchars($row['nombre']); ?>"
+                                data-categoria="<?php echo htmlspecialchars(html_entity_decode(strip_tags(nombre_categoria($row['categoria'])), ENT_QUOTES, 'UTF-8')); ?>"
+                                data-precio="$<?php echo number_format((float)$row['precio'], 2); ?>"
+                                data-descripcion="<?php echo htmlspecialchars($row['descripcion']); ?>">
+                                Comprar
+                            </button>
                         </div>
                     </div>
                 <?php } ?>
@@ -105,5 +131,25 @@ if($productos){
     <h3>Fashion Style 2026</h3>
 </footer>
 
+<button class="chatbot-boton" type="button" aria-label="Abrir asistente de compras">Chat</button>
+
+<section class="chatbot" aria-live="polite">
+    <div class="chatbot-header">
+        <div>
+            <strong>Asistente de compras</strong>
+            <span>Te ayudo a completar tu pedido</span>
+        </div>
+        <button class="chatbot-cerrar" type="button" aria-label="Cerrar asistente">X</button>
+    </div>
+
+    <div class="chatbot-mensajes"></div>
+
+    <form class="chatbot-form">
+        <input class="chatbot-input" type="text" placeholder="Escribe tu respuesta" autocomplete="off">
+        <button class="btn" type="submit">Enviar</button>
+    </form>
+</section>
+
+<script src="chatbot.js"></script>
 </body>
 </html>
