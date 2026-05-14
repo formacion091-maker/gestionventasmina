@@ -30,6 +30,7 @@ if($productos){
 <header class="hero">
     <div class="hero-contenido">
         <h1>Tienda Fashion Style</h1>
+        <h1>edinso mina</h1>
 
         <div class="menu">
             <a href="#inicio">Inicio</a>
