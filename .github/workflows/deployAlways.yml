@@ -27,5 +27,7 @@ jobs:
           exclude: |
            .git/**
            .github/**
+           imagenes/ninos/*_files/**
+           **/*.descarga
+           **/saved_resource.html
            
-

@@ -79,9 +79,7 @@ function listar_imagenes_categoria($categoria){
         return $imagenes;
     }
 
-    $archivos = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($base, FilesystemIterator::SKIP_DOTS)
-    );
+    $archivos = new DirectoryIterator($base);
 
     foreach($archivos as $archivo){
         if(!$archivo->isFile()){
