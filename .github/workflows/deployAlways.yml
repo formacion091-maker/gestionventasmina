@@ -19,11 +19,15 @@ jobs:
 
       - name: Sincronizar por FTP
         env:
-          FTP_SERVER: ftp-mina.alwaysdata.net
-          FTP_USER: mina
-          FTP_PASSWORD: clase12
-          FTP_DIR: www/cliente1
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_DIR: ${{ secrets.FTP_DIR }}
         run: |
+          test -n "$FTP_SERVER"
+          test -n "$FTP_USER"
+          test -n "$FTP_PASSWORD"
+          test -n "$FTP_DIR"
           lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_SERVER" <<EOF
           set ftp:ssl-allow true
           set ftp:ssl-force false
